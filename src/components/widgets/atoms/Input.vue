@@ -2,7 +2,7 @@
   <input
     type="text"
     ref="input"
-    class="border-2 h-20 px-5 text-2xl rounded outline-none focus:bg-stone-50 border-stone-600"
+    class="border-2 h-20 w-96 px-5 text-2xl rounded outline-none focus:bg-stone-50 border-stone-600"
     @blur="handleBlur"
     @focus="handleFocus"
   />
@@ -18,6 +18,10 @@ export default {
       type: String,
       default: "letter",
     },
+    last: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     ...mapActions(["activeLetterInput", "activeNumberInput", "inactiveInput"]),
@@ -32,7 +36,10 @@ export default {
       }
     },
     handleBlur() {
-      this.inactiveInput(this.$refs.input);
+      this.inactiveInput({
+        element: this.$refs.input,
+        isLast: this.last,
+      });
     },
   },
 };

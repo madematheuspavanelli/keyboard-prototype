@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-import { getKeyboardOffset } from "../utils/keyboardOffset";
 
 const MINIMAL_KEYBOARD_INPUT_DISTANCE = 20;
 
@@ -26,10 +25,14 @@ export const store = createStore({
   },
   mutations: {
     updateInput(state, payload) {
-      const { isActive, type, inputHeightOffset } = payload;
+      const { isActive, type, inputHeightOffset, reset } = payload;
       state.keyboardType = type;
-      state.inputActive = isActive;
       state.selectedInputHeightOffset = inputHeightOffset;
+      state.inputActive = isActive;
+
+      if (reset) {
+        state.currentOffset = 0;
+      }
     },
     setKeyboardHeight(state, payload) {
       state.keyboardHeight = payload;
@@ -81,7 +84,8 @@ export const store = createStore({
       });
       commit("updateKeyboardOffset");
     },
-    inactiveInput({ commit }, element) {
+    inactiveInput({ commit }, payload) {
+      const { element, isLast } = payload;
       const { bottom } = element.getBoundingClientRect();
       const inputHeightOffset = bottom;
 
@@ -89,6 +93,7 @@ export const store = createStore({
         isActive: false,
         type: "",
         inputHeightOffset,
+        reset: isLast,
       });
     },
   },

@@ -1,12 +1,15 @@
 <template>
-  <div class="grid grid-cols-2 gap-8 max-w-5xl mx-auto">
+  <form class="grid grid-cols-2 gap-8 mx-auto">
     <Input placeholder="Name" />
     <Input placeholder="Value" inputType="number" />
     <Input />
     <Input />
     <Input />
     <Input />
-  </div>
+    <Input />
+    <Input />
+    <Input last />
+  </form>
 </template>
 
 <script>
@@ -16,6 +19,11 @@ export default {
   name: "Form",
   components: {
     Input,
+  },
+  methods: {
+    handleExitForm() {
+      console.log("handleExitForm");
+    },
   },
 };
 </script>
