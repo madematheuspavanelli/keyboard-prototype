@@ -93,7 +93,7 @@ export const store = createStore({
         isActive: false,
         type: "",
         inputHeightOffset,
-        reset: isLast,
+        reset: true,
       });
     },
   },

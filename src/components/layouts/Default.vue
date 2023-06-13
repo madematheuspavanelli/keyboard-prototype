@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen max-h-screen flex flex-col overflow-hidden">
+  <div class="flex h-screen max-h-screen flex-col overflow-hidden">
     <Header></Header>
-    <main class="bg-gray-50 flex-1 overflow-y-scroll">
+    <main class="flex-1 overflow-y-scroll bg-gray-50">
       <slot></slot>
     </main>
     <Footer></Footer>

@@ -1,5 +1,5 @@
 <template>
-  <form class="grid grid-cols-2 gap-8 mx-auto">
+  <form class="mx-auto grid grid-cols-2 gap-8">
     <Input placeholder="Name" />
     <Input placeholder="Value" inputType="number" />
     <Input />

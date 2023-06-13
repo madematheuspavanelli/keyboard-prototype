@@ -2,7 +2,7 @@
   <input
     type="text"
     ref="input"
-    class="border-2 h-20 w-96 px-5 text-2xl rounded outline-none focus:bg-stone-50 border-stone-600"
+    class="h-20 w-96 rounded border-2 border-stone-600 px-5 text-2xl outline-none focus:bg-stone-50"
     @blur="handleBlur"
     @focus="handleFocus"
   />
