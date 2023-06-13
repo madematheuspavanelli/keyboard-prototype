@@ -1,0 +1,63 @@
+<template>
+  <div v-show="show" :class="keyboardClass"></div>
+</template>
+
+<script>
+import Keyboard from "simple-keyboard";
+import "simple-keyboard/build/css/index.css";
+
+export default {
+  name: "SimpleKeyboard",
+  props: {
+    keyboardClass: {
+      default: "simple-keyboard",
+      type: String,
+    },
+    input: {
+      type: String,
+    },
+    show: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data: () => ({
+    keyboard: null,
+  }),
+  mounted() {
+    this.keyboard = new Keyboard(this.keyboardClass, {
+      onChange: this.onChange,
+      onKeyPress: this.onKeyPress,
+    });
+  },
+  methods: {
+    onChange(input) {
+      this.$emit("onChange", input);
+    },
+    onKeyPress(button) {
+      this.$emit("onKeyPress", button);
+
+      if (button === "{shift}" || button === "{lock}") this.handleShift();
+    },
+    handleShift() {
+      let currentLayout = this.keyboard.options.layoutName;
+      let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+      this.keyboard.setOptions({
+        layoutName: shiftToggle,
+      });
+    },
+  },
+  watch: {
+    input(input) {
+      this.keyboard.setInput(input);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.simple-keyboard {
+  @apply absolute bottom-0 left-0 right-0 z-10;
+}
+</style>
