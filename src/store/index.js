@@ -20,7 +20,7 @@ export const store = createStore({
       return state.keyboardType;
     },
     verticalOffset(state) {
-      return state.currentOffset;
+      return state.inputActive ? state.currentOffset : 0;
     },
   },
   mutations: {
@@ -30,9 +30,9 @@ export const store = createStore({
       state.selectedInputHeightOffset = inputHeightOffset;
       state.inputActive = isActive;
 
-      if (reset) {
-        state.currentOffset = 0;
-      }
+      // if (!isActive) {
+      //   state.currentOffset = 0;
+      // }
     },
     setKeyboardHeight(state, payload) {
       state.keyboardHeight = payload;

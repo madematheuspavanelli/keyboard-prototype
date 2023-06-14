@@ -68,9 +68,7 @@ export default {
       this.keyboard.setInput(input);
     },
     showKeyboard() {
-      setTimeout(() => {
-        this.updateKeyboardHeight();
-      }, 0);
+      this.updateKeyboardHeight();
     },
   },
 };
