@@ -4,11 +4,10 @@
       class="flex h-full items-start p-4 transition"
       :style="{ transform: `translateY(-${verticalOffset}px)` }"
     >
-      <!-- <Form /> -->
-      <InputKeyboard />
+      <div class="mt-20 mx-auto">
+        <Form />
+      </div>
     </div>
-
-    <Keyboard />
   </Layout>
 </template>
 

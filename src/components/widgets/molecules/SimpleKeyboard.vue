@@ -1,8 +1,14 @@
 <template>
-  <div v-show="show" :class="keyboardClass"></div>
+  <div
+    class="absolute bottom-0 left-0 right-0 transition"
+    :class="{ 'translate-y-full': !showKeyboard }"
+  >
+    <div ref="keyboard" :class="keyboardClass"></div>
+  </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 
@@ -24,13 +30,22 @@ export default {
   data: () => ({
     keyboard: null,
   }),
+  computed: {
+    ...mapGetters(["showKeyboard"]),
+  },
   mounted() {
     this.keyboard = new Keyboard(this.keyboardClass, {
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
     });
+    this.updateKeyboardHeight();
   },
   methods: {
+    ...mapActions(["setKeyboardHeight"]),
+    updateKeyboardHeight() {
+      const { y: offsetTop } = this.$refs.keyboard.getBoundingClientRect();
+      this.setKeyboardHeight(offsetTop);
+    },
     onChange(input) {
       this.$emit("onChange", input);
     },
@@ -52,12 +67,11 @@ export default {
     input(input) {
       this.keyboard.setInput(input);
     },
+    showKeyboard() {
+      setTimeout(() => {
+        this.updateKeyboardHeight();
+      }, 0);
+    },
   },
 };
 </script>
-
-<style scoped>
-.simple-keyboard {
-  @apply absolute bottom-0 left-0 right-0 z-10;
-}
-</style>
