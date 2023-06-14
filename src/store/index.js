@@ -29,10 +29,9 @@ export const store = createStore({
       state.keyboardType = type;
       state.selectedInputHeightOffset = inputHeightOffset;
       state.inputActive = isActive;
-
-      // if (!isActive) {
-      //   state.currentOffset = 0;
-      // }
+      if (!isActive) {
+        state.currentOffset = 0;
+      }
     },
     setKeyboardHeight(state, payload) {
       state.keyboardHeight = payload;
@@ -49,38 +48,32 @@ export const store = createStore({
           state.selectedInputHeightOffset -
           state.keyboardHeight +
           MINIMAL_KEYBOARD_INPUT_DISTANCE +
-          state.currentOffset;
+          (state.currentOffset !== 0 ? 0 : state.currentOffset);
 
         state.currentOffset = offset;
         return;
       }
-
-      state.currentOffset = 0;
     },
   },
   actions: {
     setKeyboardHeight({ commit }, height) {
       commit("setKeyboardHeight", height);
     },
-    activeLetterInput({ commit }, element) {
-      const { bottom } = element.getBoundingClientRect();
-      const inputHeightOffset = bottom;
-
-      commit("updateInput", {
-        isActive: true,
-        type: "letter",
-        inputHeightOffset,
-      });
-      commit("updateKeyboardOffset");
+    activeLetterInput({ commit }, { offset }) {
+      setTimeout(() => {
+        commit("updateInput", {
+          isActive: true,
+          type: "letter",
+          inputHeightOffset: offset,
+        });
+        commit("updateKeyboardOffset");
+      }, 0);
     },
-    activeNumberInput({ commit }, element) {
-      const { bottom } = element.getBoundingClientRect();
-      const inputHeightOffset = bottom;
-
+    activeNumberInput({ commit }, { offset }) {
       commit("updateInput", {
         isActive: true,
         type: "number",
-        inputHeightOffset,
+        inputHeightOffset: offset,
       });
       commit("updateKeyboardOffset");
     },
@@ -95,6 +88,7 @@ export const store = createStore({
         inputHeightOffset,
         reset: true,
       });
+      commit("updateKeyboardOffset");
     },
   },
 });

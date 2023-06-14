@@ -4,7 +4,7 @@
       class="flex h-full items-start p-4 transition"
       :style="{ transform: `translateY(-${verticalOffset}px)` }"
     >
-      <div class="mx-auto mt-40">
+      <div class="mx-auto mt-28">
         <Form />
       </div>
     </div>

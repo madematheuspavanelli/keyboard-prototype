@@ -5,6 +5,7 @@
     class="h-20 w-96 rounded border-2 border-stone-600 px-5 text-2xl outline-none focus:bg-stone-50"
     @blur="handleBlur"
     @focus="handleFocus"
+    :placeholder="offsetHeight"
   />
 </template>
 
@@ -23,15 +24,25 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      offsetHeight: null,
+    };
+  },
+  mounted() {
+    let { bottom } = this.$refs.input.getBoundingClientRect();
+    this.offsetHeight = bottom;
+  },
   methods: {
     ...mapActions(["activeLetterInput", "activeNumberInput", "inactiveInput"]),
+
     handleFocus() {
       switch (this.inputType) {
         case "letter":
-          this.activeLetterInput(this.$refs.input);
+          this.activeLetterInput({ offset: this.offsetHeight });
           break;
         case "number":
-          this.activeNumberInput(this.$refs.input);
+          this.activeNumberInput({ offset: this.offsetHeight });
           break;
       }
     },
